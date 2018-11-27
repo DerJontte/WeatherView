@@ -15,8 +15,6 @@ public class MainActivity extends Activity {
 
         MakeWebView webView = new MakeWebView((WebView) findViewById(R.id.webView));
         webView.create();
-
-
     }
 
 }

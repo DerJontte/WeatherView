@@ -14,6 +14,7 @@ public class MakeWebView {
     public void create() {
         WebSettings webSettings = webView.getSettings();
         webSettings.setJavaScriptEnabled(true);
+        webView.addJavascriptInterface(new jsInterface(), "android");
         webView.setWebViewClient(new MyBrowser());
         webView.loadUrl("file:///android_asset/parser.html");
     }

@@ -9,6 +9,7 @@ function setFonts() {
 }
 
 function viewStuff() {
+    texx =
     time = document.getElementById("time");
     temp = document.getElementById("temp");
 

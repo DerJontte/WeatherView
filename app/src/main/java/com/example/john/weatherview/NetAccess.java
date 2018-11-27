@@ -4,6 +4,9 @@ import android.os.AsyncTask;
 import android.os.StrictMode;
 import android.os.StrictMode.*;
 import android.widget.TextView;
+import org.xml.sax.XMLFilter;
+import org.xml.sax.XMLReader;
+import org.xml.sax.helpers.XMLFilterImpl;
 
 import javax.xml.transform.Result;
 import java.io.*;
@@ -36,6 +39,7 @@ public class NetAccess {
 
         new Thread(new Runnable() {
             public void run() {
+
                 try {
                     URL url = new URL(server + query);
                     HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();

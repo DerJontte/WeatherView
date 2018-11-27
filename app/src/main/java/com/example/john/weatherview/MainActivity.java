@@ -7,6 +7,8 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.TextView;
 
+import java.io.IOException;
+
 public class MainActivity extends Activity {
 
     @Override
@@ -25,7 +27,11 @@ public class MainActivity extends Activity {
 
         stationName.setText(weatherData.getStationName());
         lastUpdate.setText(weatherData.getUpdateTime());
-        temperatureText.setText(String.valueOf(weatherData.getTemp()));
+        try {
+            temperatureText.setText(String.valueOf(weatherData.getTemp()));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }

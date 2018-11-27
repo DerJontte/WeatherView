@@ -1,18 +1,8 @@
 package com.example.john.weatherview;
 
-import android.os.AsyncTask;
-import android.os.StrictMode;
-import android.os.StrictMode.*;
-import android.widget.TextView;
-import org.xml.sax.XMLFilter;
-import org.xml.sax.XMLReader;
-import org.xml.sax.helpers.XMLFilterImpl;
-
-import javax.xml.transform.Result;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.net.URLConnection;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
 

@@ -16,22 +16,8 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        MakeWebView webView = new MakeWebView((WebView) findViewById(R.id.webView));
+        MakeWebView webView = new MakeWebView((WebView) findViewById(R.id.webView), this);
         webView.create();
-
-        WeatherData weatherData = new WeatherDataFMI();
-
-        TextView stationName = findViewById(R.id.stationName);
-        TextView lastUpdate = findViewById(R.id.lastUpdate);
-        TextView temperatureText = findViewById(R.id.temperatureText);
-
-        stationName.setText(weatherData.getStationName());
-        lastUpdate.setText(weatherData.getUpdateTime());
-        try {
-            temperatureText.setText(String.valueOf(weatherData.getTemp()));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
 }

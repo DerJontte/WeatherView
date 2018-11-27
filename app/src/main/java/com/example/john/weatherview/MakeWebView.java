@@ -7,14 +7,14 @@ import android.webkit.WebViewClient;
 public class MakeWebView {
     private WebView webView;
 
-    public MakeWebView(WebView webView) {
+    public MakeWebView(WebView webView, MainActivity mainActivity) {
         this.webView = webView;
+        this.webView.addJavascriptInterface(new JSInterface(mainActivity), "android");
     }
 
     public void create() {
         WebSettings webSettings = webView.getSettings();
         webSettings.setJavaScriptEnabled(true);
-        webView.addJavascriptInterface(new jsInterface(), "android");
         webView.setWebViewClient(new MyBrowser());
         webView.loadUrl("file:///android_asset/parser.html");
     }

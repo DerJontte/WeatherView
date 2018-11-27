@@ -8,15 +8,19 @@ import java.util.Calendar;
 public class WeatherDataFMI implements WeatherData {
     private String baseURL = "http://opendata.fmi.fi/wfs/fin";
 
-    private void buildQuery() {
-
+    private String buildQuery() {
+        Calendar time = Calendar.getInstance();
+        String utcTime = time.get(Calendar.YEAR) + "-" + time.get(Calendar.MONTH) + "-" + time.get(Calendar.DAY_OF_MONTH) + "T" +
+                         time.get(Calendar.HOUR_OF_DAY) + ":" + time.get(Calendar.MINUTE) + ":" + time.get(Calendar.SECOND) + "Z";
+        String query = "?service=WFS&version=2.0.0&request=getFeature&storedquery_id=fmi::observations::weather::timevaluepair&fmisid=100949&parameters=t2m&starttime=" + utcTime;
+        return query;
     }
 
     @Override
     public double getTemp() throws IOException {
-        URL url = new URL("http://example.com");
-        HttpURLConnection con = (HttpURLConnection) url.openConnection();
-        con.setRequestMethod("GET");
+        NetAccess server = new NetAccess("http://opendata.fmi.fi/wfs/fin");
+        buildQuery();
+//        String serverResponse = server.getServerData(buildQuery());
         return 0.0;
     }
 

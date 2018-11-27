@@ -16,4 +16,9 @@ public class WeatherDataFMI implements WeatherData {
     public String getUpdateTime() {
         return null;
     }
+
+    @Override
+    public String getStationName() {
+        return null;
+    }
 }

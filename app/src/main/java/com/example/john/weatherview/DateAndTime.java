@@ -1,8 +1,8 @@
-package parser;
+package com.example.john.weatherview;
 
 import java.util.Calendar;
 
-public class UTCTime {
+public class DateAndTime {
 
 
     public static String getTime() {
@@ -33,6 +33,14 @@ public class UTCTime {
 
     public static String getCompleteDate(int hourDelta) {
         return getDate() + "T" + getTime(hourDelta) + "Z";
+    }
+
+    public static String extractTime(String completeDate) {
+        return completeDate.split("T")[1].split("Z")[0];
+    }
+
+    public static String extractDate(String completeDate) {
+        return completeDate.split("T")[0];
     }
 
     private static String twoDigits(int n){

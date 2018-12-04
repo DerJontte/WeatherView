@@ -3,13 +3,7 @@ package com.example.john.weatherview;
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Pair;
-import android.webkit.WebView;
 import android.widget.TextView;
-import org.xml.sax.SAXException;
-import parser.Parser;
-
-import javax.xml.parsers.ParserConfigurationException;
-import java.io.IOException;
 
 public class MainActivity extends Activity {
 
@@ -18,23 +12,22 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        final TextView asema = findViewById(R.id.stationName);
-        asema.setText("...");
-
-        MakeWebView webView = new MakeWebView((WebView) findViewById(R.id.webView), this);
-        webView.create();
+        final TextView currTemp = findViewById(R.id.temperatureText);
+        final TextView stationName = findViewById(R.id.stationName);
+        final TextView lastUpdated = findViewById(R.id.lastUpdate);
 
         new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
-                    asema.setText("Fetching...");
+                    currTemp.setText("Fetching temperatures...");
                     Pair<String, String> values = Parser.parse();
-                    asema.setText("Fetched...");
-                    asema.setText(values.second);
+                    stationName.setText("Turku Artukainen");
+                    lastUpdated.setText(values.first.replace("T", " ").replace("Z", ""));
+                    currTemp.setText(values.second + " \u00b0C");
                 } catch (Exception e) {
                     e.printStackTrace();
-                    asema.setText("Error");
+                    currTemp.setText("Error");
                 }
             }
         }).start();

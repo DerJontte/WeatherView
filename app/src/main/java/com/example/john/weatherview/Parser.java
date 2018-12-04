@@ -1,4 +1,4 @@
-package parser;
+package com.example.john.weatherview;
 
 import android.util.Pair;
 import org.w3c.dom.Document;
@@ -19,7 +19,7 @@ public class Parser {
         DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
         StringBuilder stringBuilder = new StringBuilder();
 
-        String utcTime = UTCTime.getCompleteDate(-3);
+        String utcTime = DateAndTime.getCompleteDate(-3);
         String query = "http://opendata.fmi.fi/wfs/fin?service=WFS&version=2.0.0&request=getFeature&storedquery_id=fmi::observations::weather::timevaluepair&fmisid=100949&parameters=t2m&starttime=" + utcTime;
         URL url = new URL(query);
 
@@ -43,6 +43,6 @@ public class Parser {
         int i = keys.getLength() - 1;
         String lastKey = keys.item(i).getFirstChild().getNodeValue();
         String lastValue = values.item(i).getFirstChild().getNodeValue();
-        return new Pair<String, String>(lastKey, lastValue);
+        return new Pair<>(lastKey, lastValue);
     }
 }

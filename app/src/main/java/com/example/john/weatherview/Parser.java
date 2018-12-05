@@ -12,12 +12,12 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Calendar;
 
 public class Parser {
 
     public static Pair<String, String> parse() throws ParserConfigurationException, IOException, SAXException {
         DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
-        StringBuilder stringBuilder = new StringBuilder();
 
         String utcTime = DateAndTime.getCompleteDate(-3);
         String query = "http://opendata.fmi.fi/wfs/fin?service=WFS&version=2.0.0&request=getFeature&storedquery_id=fmi::observations::weather::timevaluepair&fmisid=100949&parameters=t2m&starttime=" + utcTime;
@@ -43,6 +43,10 @@ public class Parser {
         int i = keys.getLength() - 1;
         String lastKey = keys.item(i).getFirstChild().getNodeValue();
         String lastValue = values.item(i).getFirstChild().getNodeValue();
+
+        int offset = Integer.valueOf(Calendar.getInstance().getTimeZone().getRawOffset() / (60 * 60 * 1000));
+        int hours = Integer.valueOf(lastKey.substring(11, 13)) + offset;
+        lastKey = lastKey.substring(0, 11) + hours + lastKey.substring(13);
         return new Pair<>(lastKey, lastValue);
     }
 }

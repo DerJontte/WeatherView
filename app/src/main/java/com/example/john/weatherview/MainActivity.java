@@ -1,21 +1,37 @@
 package com.example.john.weatherview;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.os.Bundle;
 import android.util.Pair;
 import android.widget.TextView;
 
 public class MainActivity extends Activity {
+    private TextView currTemp = null;
+    private TextView stationName = null;
+    private TextView lastUpdated = null;
+    private TextView lastCheck = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        final TextView currTemp = findViewById(R.id.temperatureText);
-        final TextView stationName = findViewById(R.id.stationName);
-        final TextView lastUpdated = findViewById(R.id.lastUpdate);
+        this.currTemp = findViewById(R.id.temperatureText);
+        this.stationName = findViewById(R.id.stationName);
+        this.lastUpdated = findViewById(R.id.lastUpdate);
+        this.lastCheck = findViewById(R.id.lastCheck);
 
+        updateView();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        updateView();
+    }
+
+    private void updateView() {
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -25,6 +41,7 @@ public class MainActivity extends Activity {
                     stationName.setText("Turku Artukainen");
                     lastUpdated.setText(values.first.replace("T", " ").replace("Z", ""));
                     currTemp.setText(values.second + " \u00b0C");
+                    lastCheck.setText("Data fetched: " + DateAndTime.getTime());
                 } catch (Exception e) {
                     e.printStackTrace();
                     currTemp.setText("Error");
@@ -32,5 +49,4 @@ public class MainActivity extends Activity {
             }
         }).start();
     }
-
 }

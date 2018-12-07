@@ -45,8 +45,8 @@ public class Parser {
         String lastValue = values.item(i).getFirstChild().getNodeValue();
 
         int offset = Integer.valueOf(Calendar.getInstance().getTimeZone().getRawOffset() / (60 * 60 * 1000));
-        int hours = Integer.valueOf(lastKey.substring(11, 13)) + offset;
-        lastKey = lastKey.substring(0, 11) + hours + lastKey.substring(13);
+        int hours = (Integer.valueOf(lastKey.substring(11, 13)) + offset)%24;
+        lastKey = lastKey.substring(0, 11) + DateAndTime.twoDigits(hours) + lastKey.substring(13);
         return new Pair<>(lastKey, lastValue);
     }
 }

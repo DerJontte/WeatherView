@@ -3,13 +3,8 @@ package com.example.john.weatherview;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
+import android.view.View;
 import android.widget.RemoteViews;
-import android.widget.TextView;
-import org.w3c.dom.Text;
-import org.xml.sax.SAXException;
-
-import javax.xml.parsers.ParserConfigurationException;
-import java.io.IOException;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -18,12 +13,10 @@ import java.util.concurrent.atomic.AtomicReference;
  */
 public class SimpleWeatherWidget extends AppWidgetProvider {
 
-    static void updateAppWidget(final Context context, AppWidgetManager appWidgetManager,
-                                int appWidgetId) {
+    static void updateAppWidget(final Context context, final AppWidgetManager appWidgetManager,
+                                final int appWidgetId) {
 
-        CharSequence widgetText = context.getString(R.string.appwidget_text);
-        final AtomicReference<CharSequence> atomicText = new AtomicReference<>();
-        final AtomicBoolean ready = new AtomicBoolean(false);
+        final AtomicReference<CharSequence> atomicText = new AtomicReference<CharSequence>(context.getString(R.string.appwidget_text));
 
         try {
             new Thread(new Runnable() {
@@ -31,9 +24,16 @@ public class SimpleWeatherWidget extends AppWidgetProvider {
                 public void run() {
                     String temp = null;
                     try {
-                        temp = Parser.parse().second;
-                        atomicText.set("Artukainen\n" + temp + " \u00b0C");
-                        ready.set(true);
+                        while(true) {
+                            temp = Parser.parse().second;
+                            atomicText.set("Artukainen\n" + temp + " \u00b0C");
+                            // Construct the RemoteViews object
+                            RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.simple_weather_widget);
+                            views.setTextViewText(R.id.appwidget_text, atomicText.get());
+                            // Instruct the widget manager to update the widget
+                            appWidgetManager.updateAppWidget(appWidgetId, views);
+                            Thread.sleep(300000);
+                        }
                     } catch (Exception e) {
                         atomicText.set("Error");
                         e.printStackTrace();
@@ -44,16 +44,6 @@ public class SimpleWeatherWidget extends AppWidgetProvider {
             atomicText.set("Error");
             e.printStackTrace();
         }
-        while(!ready.get()) {
-
-        }
-        widgetText = (CharSequence) atomicText.get();
-        // Construct the RemoteViews object
-        RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.simple_weather_widget);
-        views.setTextViewText(R.id.appwidget_text, widgetText);
-
-        // Instruct the widget manager to update the widget
-        appWidgetManager.updateAppWidget(appWidgetId, views);
     }
 
     @Override

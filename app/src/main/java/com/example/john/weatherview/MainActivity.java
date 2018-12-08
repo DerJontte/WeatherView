@@ -38,6 +38,7 @@ public class MainActivity extends Activity {
                 stationName.setText("Fetching temperatures...");
                 try {
                     Pair<String, String> values = Parser.parse();
+
                     lastUpdated.setText(values.first.replace("T", " ").replace("Z", ""));
                     currTemp.setText(values.second + " \u00b0C");
                     stationName.setText("Turku Artukainen");

@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name" translatable="true">WeatherApp</string>
+    <string name="appwidget_text">Widget</string>
+    <string name="add_widget">Add widget</string>
 </resources>

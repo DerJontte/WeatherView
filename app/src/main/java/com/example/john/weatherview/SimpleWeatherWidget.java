@@ -3,9 +3,8 @@ package com.example.john.weatherview;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
-import android.view.View;
 import android.widget.RemoteViews;
-import java.util.concurrent.atomic.AtomicBoolean;
+
 import java.util.concurrent.atomic.AtomicReference;
 
 /**
@@ -23,16 +22,19 @@ public class SimpleWeatherWidget extends AppWidgetProvider {
                 @Override
                 public void run() {
                     String temp = null;
+                    String time = null;
                     try {
                         while(true) {
                             temp = Parser.parse().second;
-                            atomicText.set("Artukainen\n" + temp + " \u00b0C");
+                            time = DateAndTime.getTime();
+                            atomicText.set("Artukainen\n".concat(time).concat("\n").concat(temp).concat(" \u00b0C"));
+
                             // Construct the RemoteViews object
                             RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.simple_weather_widget);
                             views.setTextViewText(R.id.appwidget_text, atomicText.get());
                             // Instruct the widget manager to update the widget
                             appWidgetManager.updateAppWidget(appWidgetId, views);
-                            Thread.sleep(300000);
+                            Thread.sleep(60000);
                         }
                     } catch (Exception e) {
                         atomicText.set("Error");

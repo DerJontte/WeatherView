@@ -4,7 +4,6 @@ import java.util.Calendar;
 
 public class DateAndTime {
 
-
     public static String getTime() {
         return getTime(0);
     }
@@ -37,7 +36,7 @@ public class DateAndTime {
     public static String getCompleteDate(int hourDelta) {
         String queryTime = getTime(hourDelta);
         int dateDelta = 0;
-        if (queryTime.substring(0,1).equals("-")) {
+        if (queryTime.substring(0, 1).equals("-")) {
             queryTime = queryTime.substring(1);
             dateDelta = -1;
         }
@@ -52,7 +51,7 @@ public class DateAndTime {
         return completeDate.split("T")[0];
     }
 
-    public static String twoDigits(int n){
+    public static String twoDigits(int n) {
         return ("0" + n).substring(String.valueOf(n).length() - 1);
     }
 }
